@@ -2,19 +2,16 @@
 #include <string>
 using namespace std;
 
-	/*Ќаписать программу, котора€ использует класс string дл€ анализа строки, содержащей математическое выражение,
-	например, вида Ч (2+3)*4+1. —трока вводитс€ с клавиатуры. ѕрограмма выдает результат вычислени€ выражени€.*/
-
 	/*
-	¬ программе учитано:
-		- целые числа (любой длинны)
+	The program takes into account:
+		- integers(any length)
 		- "+", "-", "*", "(", ")"
-		- неограниченное кол-во знаков и скобок
-		- скобки в скобках писать нельз€
-		- программа выдает не только ответ, но и показывает пошаговое решение
+		- unlimited number of characters and brackets
+		- parentheses in parentheses cannot be written
+		- the program gives not only an answer, but also shows a step-by-step solution
 	*/
 
-	// -11-(23*3)*(3-4*6)-(-2890+3)*0+1-333+2+(-5*3-1)+12*(12-34)-23+2021		(пример уравнени€)
+	//-11-(23*3)*(3-4*6)-(-2890+3)*0+1-333+2+(-5*3-1)+12*(12-34)-23+2021 (example equation)
 
 int DigitCount(int number) {
 	int result = 1;
@@ -48,7 +45,7 @@ void Show(int* arr, int size) {
 int main() {
 	string str;
 	cin >> str;
-	// подсчет чисел и знаков
+	// counting numbers and signs
 	int arrSize = 0, countBracket = 0;
 	for (int i = 0; i < str.length(); i++)
 		if (isdigit(str[i]) == 0) { 
@@ -57,7 +54,7 @@ int main() {
 		}
 	arrSize = arrSize * 2 + 1 + countBracket; 
 	int* arr = new int[arrSize]; 
-	// запись в целочисленный массив символов из str
+	// writing to an integer array of characters from str
 	string myStr = str; bool flag = true, bracket = false;
 	for (int i = 0, j = 0; i < myStr.length(); j++)
 		switch (myStr[i]) { 
@@ -116,9 +113,9 @@ int main() {
 			else myStr.erase(0, DigitCount(arr[j]) + 1);
 			flag = false; bracket = false;
 		}
-	////// проверка уравнени€
+	////// equation check
 	Show(arr, arrSize);
-	// поиск умножени€ 1
+	// search for multiplication 1
 	for (int i = 0; i < arrSize; i++)
 		if (arr[i] == 2147483645
 			&& arr[i + 1] != 2147483644 && arr[i - 1] != 2147483643) {
@@ -130,9 +127,9 @@ int main() {
 				RemoveEntry(arr, i - 2, arrSize);
 			}
 		}
-	////// проверка уравнени€
+	////// equation check
 	Show(arr, arrSize);
-	// поиск скобок
+	// search for brackets
 	int resBracket = 0, charBracket = 0; flag = true; bool flag2 = false, flag3 = false;
 	for (int i = 0; i < arrSize; ) {
 		if (arr[i] == 2147483644) flag2 = true;
@@ -169,18 +166,18 @@ int main() {
 					break;
 				}
 	}
-	////// проверка уравнени€
+	////// equation check
 	Show(arr, arrSize);
-	// поиск умножени€ 2
+	// search for multiplication 2
 	for (int i = 0; i < arrSize; i++)
 		if (arr[i] == 2147483645) {
 			arr[i - 1] = arr[i - 1] * arr[i + 1];
 			RemoveEntry(arr, i + 1, arrSize);
 			RemoveEntry(arr, i, arrSize);
 		}
-	////// проверка уравнени€
+	////// equation check
 	Show(arr, arrSize);
-	// поиск сложени€ и вычитани€
+	// search for addition and subtraction
 	int res = 0; flag = true;
 	for (int i = 0; i < arrSize; i++) {
 		if (arrSize == 1) { res = arr[i]; break; }
@@ -197,7 +194,7 @@ int main() {
 			flag = false;
 		}
 	}
-	// вывод результата
+	// result output
 	cout << "\n\n" << str << " = " << res << endl;
 
 	delete[]arr; 
